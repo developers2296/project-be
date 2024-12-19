@@ -3,6 +3,9 @@ const Response = require('../Services/Response.js');
 const UserService = require('../Services/UserServices.js');
 
 exports.login = async (req, res) => {
+
+  console.log('Login controller called');
+  
   let { email, password } = req.body;
   
   if (!email)
