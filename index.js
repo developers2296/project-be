@@ -1,16 +1,16 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const routes = require("./routes");
+import express, { json } from "express";
+import { connect } from "mongoose";
+import { config } from "dotenv";
+import cors from "cors";
+import routes from "./routes/index.js";
 
-dotenv.config();
+config();
 
 const app = express();
 const PORT = process.env.PORT || 3004;
 
 // Middleware
-app.use(express.json());
+app.use(json());
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -20,13 +20,12 @@ app.use(
 );
 
 // Database connection
-mongoose
-  .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/testDB', {
+connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/testDB', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("Connected to MongoDB");
+    console.log('\x1b[36m%s\x1b[0m', 'Database Connected to MongoDB.');
   })
   .catch((err) => {
     console.error("MongoDB connection error:", err);
@@ -37,5 +36,5 @@ app.use("/", routes);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log('\x1b[35m%s\x1b[0m', `Serving on port ${PORT}`)
 });

@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const Car = require('../Models/Car.js');
-const GeneralServices = require('./GeneralServices');
+import mongoose from 'mongoose';
+import Car from '../Models/Car.js';
+import { generateObjectId } from './GeneralServices.js';
 
-exports.store = async (req) => {
+export async function store(req) {
   const {
     model,
     price,
@@ -13,7 +13,7 @@ exports.store = async (req) => {
   const { userId } = req.user;
 
   let fields = {
-    _id: GeneralServices.generateObjectId(),
+    _id: generateObjectId(),
     model,
     price,
     phone,
@@ -23,22 +23,22 @@ exports.store = async (req) => {
   };
   let carDetail = await new Car(fields).save();
   return carDetail;
-};
+}
 
-exports.getAll = async (req) => {
+export async function getAllData(req) {
   const { userId } = req.user;
   let cars = await Car.find({ userId });
   return cars;
-};
+}
 
-exports.getById = async (req) => {
+export async function getCarById(req) {
   const { id } = req.params;
   const { userId } = req.user;
   let car = await Car.findOne({ _id: id, userId });
   return car;
-};
+}
 
-exports.update = async (req) => {
+export async function updateCar(req) {
   const {
     id,
     model,
@@ -60,4 +60,4 @@ exports.update = async (req) => {
   };
   let carDetail = await Car.findOneAndUpdate({ _id: id, userId }, fields, { new: true });
   return carDetail;
-};
+}

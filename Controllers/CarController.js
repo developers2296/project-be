@@ -1,10 +1,10 @@
-const fs = require('fs');
-const path = require('path');
-const CarServices = require('../Services/CarServices');
-const Response = require('../Services/Response');
-const GeneralServices = require('../Services/GeneralServices');
+import fs from 'fs';
+import path from 'path';
+import { store, updateCar, getAllData, getCarById } from '../Services/CarServices.js';
+import { sendError, sendResponse } from '../Services/Response.js';
+import { validateFields } from '../Services/GeneralServices.js';
 
-exports.store = async (req, res) => {
+export async function create(req, res) {
   const Validations = {
     model: 'Car Model field is required.',
     price: 'Car price field is required.',
@@ -12,23 +12,23 @@ exports.store = async (req, res) => {
     city: 'City Required',
   };
 
-  const validation = GeneralServices.validateFields(req.body, Validations);
+  const validation = validateFields(req.body, Validations);
   if (!validation.isValid) {
-    return Response.sendError(res, validation.message, [], 422);
+    return sendError(res, validation.message, [], 422);
   }
   
   if (!req.files.length){
-    return Response.sendError(res, 'Attachment file required.', [], 422);
+    return sendError(res, 'Attachment file required.', [], 422);
   }
 
   req.body.fileName = req.files.map(file => file.path);
 
-  const result = await CarServices.store(req);
+  const result = await store(req);
 
-  return Response.sendResponse(res, 'Car created successfully.', result);
-};
+  return sendResponse(res, 'Car created successfully.', result);
+}
 
-exports.update = async (req, res) => {
+export async function update(req, res) {
   const Validations = {
     model: 'Car Model field is required.',
     price: 'Car price field is required.',
@@ -36,26 +36,26 @@ exports.update = async (req, res) => {
     city: 'City Required',
   };
 
-  const validation = GeneralServices.validateFields(req.body, Validations);
+  const validation = validateFields(req.body, Validations);
   if (!validation.isValid) {
-    return Response.sendError(res, validation.message, [], 422);
+    return sendError(res, validation.message, [], 422);
   }
 
   if (req.files.length) {
     req.body.fileName = req.files.map(file => file.path);
   }
 
-  const result = await CarServices.update(req);
+  const result = await updateCar(req);
 
-  return Response.sendResponse(res, 'Car updated successfully.', result);
-};
+  return sendResponse(res, 'Car updated successfully.', result);
+}
 
-exports.getAll = async (req, res) => {
-  const result = await CarServices.getAll(req);
-  return Response.sendResponse(res, 'Cars retrieved successfully.', result);
-};
+export async function getAll(req, res) {
+  const result = await getAllData(req);
+  return sendResponse(res, 'Cars retrieved successfully.', result);
+}
 
-exports.getById = async (req, res) => {
-  const result = await CarServices.getById(req);
-  return Response.sendResponse(res, 'Car retrieved successfully.', result);
-};
+export async function getById(req, res) {
+  const result = await getCarById(req);
+  return sendResponse(res, 'Car retrieved successfully.', result);
+}

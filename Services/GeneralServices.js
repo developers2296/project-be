@@ -1,12 +1,12 @@
-const fs = require('fs');
-const path = require('path');
-const multer = require('multer');
+import { existsSync, mkdirSync } from 'fs';
+import path from 'path';
+import multer, { diskStorage } from 'multer';
 
-const storage = multer.diskStorage({
+const storage = diskStorage({
   destination: (req, file, cb) => {
     const uploadDir = 'uploads/';
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
+    if (!existsSync(uploadDir)) {
+      mkdirSync(uploadDir, { recursive: true });
     }
     cb(null, uploadDir);
   },
@@ -31,17 +31,17 @@ const upload = multer({
   }
 });
 
-exports.uploadFiles = upload.array('attachments', 10);
+export const uploadFiles = upload.array('attachments', 10);
 
-exports.validateFields = (fields, validations) => {
+export function validateFields(fields, validations) {
   for (const [key, value] of Object.entries(validations)) {
     if (!fields[key]) {
       return { isValid: false, message: value };
     }
   }
   return { isValid: true };
-};
+}
 
-exports.generateObjectId = () => {
+export function generateObjectId() {
   return new mongoose.Types.ObjectId();
-};
+}

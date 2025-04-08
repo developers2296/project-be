@@ -1,4 +1,4 @@
-function sendResponse(res, message, result, code = 200) {
+export function sendResponse(res, message, result, code = 200) {
   let response = {
     metadata: {
       responseCode: code,
@@ -11,7 +11,7 @@ function sendResponse(res, message, result, code = 200) {
   return res.status(response.metadata.responseCode).json(response);
 }
 
-function sendError(res, message, result = [], code = 404) {
+export function sendError(res, message, result = [], code = 404) {
   let response = {
     metadata: {
       responseCode: code,
@@ -24,7 +24,7 @@ function sendError(res, message, result = [], code = 404) {
   return res.status(response.metadata.responseCode).json(response);
 }
 
-function getDefaultResponse() {
+export function getDefaultResponse() {
   return {
     metadata: {
       responseCode: 400,
@@ -35,4 +35,4 @@ function getDefaultResponse() {
   };
 }
 
-module.exports = { sendResponse, sendError, getDefaultResponse };
+// export default { sendResponse, sendError, getDefaultResponse };

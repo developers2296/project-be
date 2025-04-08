@@ -1,13 +1,13 @@
-const express = require('express');
-const router = express.Router();
+import { Router } from 'express';
+const router = Router();
 
-const jwtAuth = require('../Middleware/JWTAuth');
-const CarController = require('../Controllers/CarController');
-const GeneralServices = require('../Services/GeneralServices');
+import jwtAuth from '../Middleware/JWTAuth.js';
+import { create, update, getAll, getById } from '../Controllers/CarController.js';
+import { uploadFiles } from '../Services/GeneralServices.js';
 
-router.post('/add', jwtAuth, GeneralServices.uploadFiles, CarController.store);
-router.put('/update/:id', jwtAuth, GeneralServices.uploadFiles, CarController.update);
-router.get('/all', jwtAuth, CarController.getAll);
-router.get('/:id', jwtAuth, CarController.getById);
+router.post('/add', jwtAuth, uploadFiles, create);
+router.put('/update/:id', jwtAuth, uploadFiles, update);
+router.get('/all', jwtAuth, getAll);
+router.get('/:id', jwtAuth, getById);
 
-module.exports = router;
+export default router;

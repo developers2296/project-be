@@ -1,8 +1,9 @@
-const jwt = require('jsonwebtoken');
+import pkg from 'jsonwebtoken';
+import { sendError } from "../Services/Response.js";
 
-const response = require("../Services/Response.js");
+const { verify } = pkg;
 
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
 	try 
 	{
 		const token = req.headers['authorization']?.split(' ')[1];
@@ -11,7 +12,7 @@ module.exports = (req, res, next) => {
 		  return res.status(403).json({ message: 'No token provided' });
 		}
 	  
-		jwt.verify(token, 'Check', (err, decoded) => {
+		verify(token, 'Check', (err, decoded) => {
 		  if (err) {
 			return res.status(401).json({ message: 'Authentication failed. Token has expired.' });
 		  }
@@ -21,6 +22,6 @@ module.exports = (req, res, next) => {
 	} 
 	catch (error) 
 	{   
-		return response.sendError(res, 'Authentication failed. Token has been expired.', [], 401);
+		return sendError(res, 'Authentication failed. Token has been expired.', [], 401);
 	}
 };

@@ -1,10 +1,10 @@
-const express = require('express');
-const router = express.Router();
+import { Router } from 'express';
+const router = Router();
 
-const jwtAuth = require('../Middleware/JWTAuth');
-const UserController = require('../Controllers/UserController');
+import jwtAuth from '../Middleware/JWTAuth.js';
+import { getProfileData, updateProfile } from '../Controllers/UserController.js';
 
-router.get('/profile', jwtAuth, UserController.getProfile);
-router.put('/update', jwtAuth, UserController.updateProfile);
+router.get('/profile', jwtAuth, getProfileData);
+router.put('/update', jwtAuth, updateProfile);
 
-module.exports = router;
+export default router;

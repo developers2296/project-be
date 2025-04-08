@@ -1,12 +1,12 @@
-const UserServices = require('../Services/UserServices');
-const Response = require('../Services/Response');
+import { getProfile, updateProfileData } from '../Services/UserServices.js';
+import { sendResponse } from '../Services/Response.js';
 
-exports.getProfile = async (req, res) => {
-  const result = await UserServices.getProfile(req);
-  return Response.sendResponse(res, 'User profile retrieved successfully.', result);
-};
+export async function getProfileData(req, res) {
+  const result = await getProfile(req);
+  return sendResponse(res, 'User profile retrieved successfully.', result);
+}
 
-exports.updateProfile = async (req, res) => {
-  const result = await UserServices.updateProfile(req);
-  return Response.sendResponse(res, 'User profile updated successfully.', result);
-};
+export async function updateProfile(req, res) {
+  const result = await updateProfileData(req);
+  return sendResponse(res, 'User profile updated successfully.', result);
+}

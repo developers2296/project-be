@@ -2,9 +2,14 @@
   "name": "test-project",
   "version": "1.0.0",
   "main": "index.js",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "node index.js.",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",

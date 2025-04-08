@@ -1,14 +1,14 @@
 // project-be/routes/index.js
-const express = require('express');
-const authRoutes = require('./Auth');
-const carRoutes = require('./Car');
-const userRoutes = require('./User');
-const paymentRoutes = require('./Payment');
-const router = express.Router();
+import { Router } from 'express';
+import authRoutes from './Auth.js';
+import carRoutes from './Car.js';
+import userRoutes from './User.js';
+import paymentRoutes from './Payment.js';
+const router = Router();
 
 router.use('/auth', authRoutes);
 router.use('/cars', carRoutes);
 router.use('/users', userRoutes);
 router.use('/payments', paymentRoutes);
 
-module.exports = router;
+export default router;

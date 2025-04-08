@@ -1,16 +1,16 @@
-const UserModel = require('../Models/User.js');
+import User from '../Models/User.js';
 
-exports.findByEmail = async (email) => {
-  return await UserModel.findOne({ email: email.trim().toLowerCase() });
-};
+export async function findByEmail(email) {
+  return await User.findOne({ email: email.trim().toLowerCase() });
+}
 
-exports.getProfile = async (req) => {
+export async function getProfile(req) {
   const { userId } = req.user;
-  let user = await UserModel.findById(userId);
+  let user = await User.findById(userId);
   return user;
-};
+}
 
-exports.updateProfile = async (req) => {
+export async function updateProfileData(req) {
   const { userId } = req.user;
   const { email, name, phone } = req.body;
 
@@ -20,6 +20,6 @@ exports.updateProfile = async (req) => {
     phone,
   };
 
-  let user = await UserModel.findByIdAndUpdate(userId, fields, { new: true });
+  let user = await User.findByIdAndUpdate(userId, fields, { new: true });
   return user;
-};
+}

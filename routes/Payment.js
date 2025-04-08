@@ -1,8 +1,9 @@
 // project-be/routes/Payment.js
-const express = require('express');
-const { createPaymentIntent } = require('../Controllers/PaymentController');
-const router = express.Router();
+import { Router } from 'express';
+import{ createPaymentIntent }  from '../Controllers/PaymentController.js';
+// const { createPaymentIntent } = default;
+const router = Router();
 
 router.post('/create-payment-intent', createPaymentIntent);
 
-module.exports = router;
+export default router;
